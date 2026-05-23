@@ -1,0 +1,101 @@
+<div class="wrapper">
+
+  <!-- ── Header ─────────────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-title">
+      <h1>🏨 Hotel Room Reservation System</h1>
+      <p class="subtitle">97 rooms · 10 floors · Optimal assignment algorithm</p>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-val">{{ totalRooms }}</span>
+        <span class="stat-lbl">Total</span>
+      </div>
+      <div class="stat available-stat">
+        <span class="stat-val">{{ availableCount }}</span>
+        <span class="stat-lbl">Available</span>
+      </div>
+      <div class="stat occupied-stat">
+        <span class="stat-val">{{ occupiedCount }}</span>
+        <span class="stat-lbl">Occupied</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Controls ───────────────────────────────────────────────────── -->
+  <section class="controls">
+    <input
+      type="number"
+      [(ngModel)]="numRooms"
+      min="1"
+      max="5"
+      placeholder="No. of rooms (1–5)"
+      (keydown.enter)="bookRooms()"
+    />
+    <button class="btn-book" (click)="bookRooms()">Book</button>
+    <button class="btn-random" (click)="randomOccupancy()">⚄ Random Occupancy</button>
+    <button class="btn-reset" (click)="resetAll()">↺ Reset All</button>
+  </section>
+
+  <!-- ── Error ──────────────────────────────────────────────────────── -->
+  <div class="error-msg" *ngIf="errorMsg">⚠ {{ errorMsg }}</div>
+
+  <!-- ── Last booking info ──────────────────────────────────────────── -->
+  <div class="booking-result" *ngIf="showLastBooking">
+    <strong>Last booking:</strong>
+    <span class="badge" *ngFor="let id of lastBookedArray()">{{ id }}</span>
+    <span class="travel-time">⏱ {{ lastTravelTime }} min total travel time</span>
+  </div>
+
+  <!-- ── Legend ─────────────────────────────────────────────────────── -->
+  <div class="legend">
+    <span class="legend-item"><span class="dot dot-available"></span> Available</span>
+    <span class="legend-item"><span class="dot dot-occupied"></span> Occupied</span>
+    <span class="legend-item"><span class="dot dot-new"></span> Just Booked</span>
+  </div>
+
+  <!-- ── Hotel Grid ─────────────────────────────────────────────────── -->
+  <div class="hotel-scroll">
+    <div class="hotel">
+
+      <!-- Lift shaft -->
+      <div class="lift-shaft">
+        <div class="lift-inner">
+          <span class="lift-icon">🛗</span>
+          <span class="lift-label">LIFT &amp; STAIRS</span>
+        </div>
+      </div>
+
+      <!-- Floors -->
+      <div class="floors">
+        <div class="floor-row" *ngFor="let floor of displayFloors">
+
+          <!-- Floor label -->
+          <div class="floor-label">
+            <span class="floor-num">{{ floor }}</span>
+            <span class="floor-avail">{{ floorAvailable(floor) }}/{{ floorTotal(floor) }}</span>
+          </div>
+
+          <!-- Room cells -->
+          <div class="rooms-grid">
+            <div
+              *ngFor="let room of floorRooms(floor)"
+              [class]="roomClass(room)"
+              [title]="'Room ' + room.id + ' · ' + room.status"
+            >
+              {{ room.id }}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Toast notification ─────────────────────────────────────────── -->
+  <div class="toast" *ngIf="toastMsg" [class]="'toast toast-' + toastType">
+    {{ toastMsg }}
+  </div>
+
+</div>
