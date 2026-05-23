@@ -14,25 +14,6 @@ npm run build
 # Output: dist/hotel-reservation/
 ```
 
-## Deploy (Vercel — easiest)
-
-1. Push this folder to GitHub
-2. Go to https://vercel.com → New Project → Import repo
-3. Framework: **Angular**
-4. Build command: `npm run build`
-5. Output directory: `dist/hotel-reservation/browser`
-6. Deploy ✓
-
-## Deploy (Netlify)
-
-1. Push to GitHub
-2. Go to https://netlify.com → Add new site → Import from Git
-3. Build command: `npm run build`
-4. Publish directory: `dist/hotel-reservation/browser`
-5. Deploy ✓
-
----
-
 ## Problem Summary
 
 **Hotel:** 97 rooms across 10 floors  
